@@ -7,12 +7,12 @@ using MicroWarehouse.Core.Abstractions.Models.Responses;
 namespace MicroWarehouse.Controllers
 {
     [ApiController]
-    [Route("api/products")]
-    public class ProductController(ILogger<ProductController> logger, IMediator mediator) : ControllerBase
+    [Route("api/categories")]
+    public class CategoryController(ILogger<CategoryController> logger, IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType(typeof(ApiResponse<IEnumerable<Product>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetProductsAsync(CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<Category>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetCategoriesAsync(CancellationToken cancellationToken)
         {
             var result = await mediator.Send(new GetAllCategoriesRequest(), cancellationToken);
             return result.Success
@@ -21,8 +21,8 @@ namespace MicroWarehouse.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateProductAsync([FromBody] CreateCategoryRequest request, CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(ApiResponse<Category>), StatusCodes.Status201Created)]
+        public async Task<IActionResult> CreateCategoryAsync([FromBody] CreateCategoryRequest request, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(request, cancellationToken);
             return result.Success
@@ -31,7 +31,7 @@ namespace MicroWarehouse.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status202Accepted)]
+        [ProducesResponseType(typeof(ApiResponse<Category>), StatusCodes.Status202Accepted)]
         public async Task<IActionResult> UpdateProductAsync([FromBody] UpdateCategoryRequest request, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(request, cancellationToken);
@@ -40,9 +40,9 @@ namespace MicroWarehouse.Controllers
                 : StatusCode(result.Code, result.Error);
         }
 
-        [HttpPut("stock")]
-        [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status202Accepted)]
-        public async Task<IActionResult> UpdateProcuctStockAmountAsync([FromBody] DeleteCategoryRequest request, CancellationToken cancellationToken)
+        [HttpDelete]
+        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteCategoryAsync([FromBody] DeleteCategoryRequest request, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(request, cancellationToken);
             return result.Success
