@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MicroWarehouse.Core.Abstractions.Models;
-using MicroWarehouse.Core.Abstractions.Models.Requests;
+using MicroWarehouse.Core.Abstractions.Models.Requests.Orders;
 using MicroWarehouse.Core.Abstractions.Models.Responses;
 
 namespace MicroWarehouse.Controllers
