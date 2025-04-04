@@ -1,26 +1,32 @@
 ﻿using Microsoft.Extensions.Options;
 using MicroWarehouse.Data.Abstractions.DatabaseSettings;
 using MicroWarehouse.Data.Abstractions.DTOs;
+using MicroWarehouse.Data.Abstractions.Interfaces;
 using MongoDB.Driver;
 
 namespace MicroWarehouse.Data.Repositories
 {
-    public class ProductRepository(IOptions<WarehouseDatabaseSettings> warehouseDatabaseSettings)
+    public class ProductRepository(IOptions<WarehouseDatabaseSettings> warehouseDatabaseSettings) : IProductRepository
     {
         private readonly IMongoCollection<ProductDto> _productsCollection = InitializeMongoCollection(warehouseDatabaseSettings.Value);
 
-        public async Task<List<ProductDto>> GetAsync() => await _productsCollection.Find(_ => true).ToListAsync();
+        public async Task<List<ProductDto>> GetAllProductsAsync(CancellationToken cancellationToken) => await _productsCollection.Find(_ => true).ToListAsync(cancellationToken);
 
-        public async Task<ProductDto?> GetAsync(int productId) => await _productsCollection.Find(x => x.ProductId == productId).FirstOrDefaultAsync();
+        public async Task<ProductDto?> GetProductByIdAsync(int productId, CancellationToken cancellationToken) 
+            => await _productsCollection.Find(x => x.ProductId == productId).FirstOrDefaultAsync(cancellationToken);
 
-        public async Task CreateAsync(ProductDto newProduct) => await _productsCollection.InsertOneAsync(newProduct);
+        public async Task CreateAsync(ProductDto newProduct, CancellationToken cancellationToken) => await _productsCollection.InsertOneAsync(newProduct, cancellationToken: cancellationToken);
 
-        public async Task UpdateAsync(int productId, ProductDto updatedProduct) => await _productsCollection.ReplaceOneAsync(x => x.ProductId == productId, updatedProduct);
+        public async Task<bool> UpdateAsync(int productId, ProductDto updatedProduct, CancellationToken cancellationToken)
+        {
+            var result = await _productsCollection.ReplaceOneAsync(x => x.ProductId == productId, updatedProduct, cancellationToken: cancellationToken);
+            return result.ModifiedCount > 0;
+        }
 
-        public async Task<bool> UpdateStockAsync(int productId, int newQuantity)
+        public async Task<bool> UpdateStockAsync(int productId, int newQuantity, CancellationToken cancellationToken)
         {
             var update = Builders<ProductDto>.Update.Set(p => p.StockAmount, newQuantity);
-            var result = await _productsCollection.UpdateOneAsync(p => p.ProductId == productId, update);
+            var result = await _productsCollection.UpdateOneAsync(p => p.ProductId == productId, update, cancellationToken: cancellationToken);
             return result.ModifiedCount > 0;
         }
 

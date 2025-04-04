@@ -2,22 +2,31 @@
 using MicroWarehouse.Data.Abstractions.DTOs;
 using MongoDB.Driver;
 using Microsoft.Extensions.Options;
+using MicroWarehouse.Data.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Data.Repositories
 {
-    public class CategoryRepository(IOptions<WarehouseDatabaseSettings> warehouseDatabaseSettings)
+    public class CategoryRepository(IOptions<WarehouseDatabaseSettings> warehouseDatabaseSettings) : ICategoryRepository
     {
         private readonly IMongoCollection<CategoryDto> _categoriesCollection = InitializeMongoCollection(warehouseDatabaseSettings.Value);
 
-        public async Task<List<CategoryDto>> GetAsync() => await _categoriesCollection.Find(_ => true).ToListAsync();
+        public async Task<List<CategoryDto>> GetAllCategoriesAsync(CancellationToken cancellationToken) => await _categoriesCollection.Find(_ => true).ToListAsync(cancellationToken);
 
-        public async Task<CategoryDto?> GetAsync(int id) => await _categoriesCollection.Find(x => x.CategoryId == id).FirstOrDefaultAsync();
+        public async Task<CategoryDto?> GetAsync(int categoryId, CancellationToken cancellationToken) 
+            => await _categoriesCollection.Find(x => x.CategoryId == categoryId).FirstOrDefaultAsync(cancellationToken);
 
-        public async Task CreateAsync(CategoryDto newCategory) => await _categoriesCollection.InsertOneAsync(newCategory);
+        public async Task CreateAsync(CategoryDto newCategory, CancellationToken cancellationToken) => await _categoriesCollection.InsertOneAsync(newCategory, cancellationToken: cancellationToken);
 
-        public async Task UpdateAsync(int categoryId, CategoryDto updatedCategory) => await _categoriesCollection.ReplaceOneAsync(x => x.CategoryId == categoryId, updatedCategory);
-
-        public async Task RemoveAsync(int categoryId) => await _categoriesCollection.DeleteOneAsync(x => x.CategoryId == categoryId);
+        public async Task<bool> UpdateAsync(int categoryId, CategoryDto updatedCategory, CancellationToken cancellationToken)
+        {
+            var result = await _categoriesCollection.ReplaceOneAsync(x => x.CategoryId == categoryId, updatedCategory, cancellationToken: cancellationToken);
+            return result.ModifiedCount > 0;
+        }
+        public async Task<bool> RemoveAsync(int categoryId, CancellationToken cancellationToken)
+        {
+            var result = await _categoriesCollection.DeleteOneAsync(x => x.CategoryId == categoryId, cancellationToken);
+            return result.DeletedCount > 0;
+        }
 
         private static IMongoCollection<CategoryDto> InitializeMongoCollection(WarehouseDatabaseSettings settings)
         {
