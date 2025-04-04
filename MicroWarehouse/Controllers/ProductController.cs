@@ -8,46 +8,38 @@ namespace MicroWarehouse.Controllers
 {
     [ApiController]
     [Route("api/products")]
-    public class ProductController(ILogger<ProductController> logger, IMediator mediator) : ControllerBase
+    public class ProductController(ILogger<ProductController> logger, IMediator mediator) : ApiControllerBase
     {
         [HttpGet]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<Product>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProductsAsync(CancellationToken cancellationToken)
         {
-            var result = await mediator.Send(new GetAllCategoriesRequest(), cancellationToken);
-            return result.Success
-                ? Ok(result.Data)
-                : StatusCode(result.Code, result.Error);
+            var result = await mediator.Send(new GetAllProductsRequest(), cancellationToken);
+            return HandleResponse(result);
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateProductAsync([FromBody] CreateCategoryRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProduct request, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(request, cancellationToken);
-            return result.Success
-                ? Ok(result.Data)
-                : StatusCode(result.Code, result.Error);
+            return HandleResponse(result);
         }
 
         [HttpPut]
         [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status202Accepted)]
-        public async Task<IActionResult> UpdateProductAsync([FromBody] UpdateCategoryRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProductAsync([FromBody] UpdateProductRequest request, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(request, cancellationToken);
-            return result.Success
-                ? Ok(result.Data)
-                : StatusCode(result.Code, result.Error);
+            return HandleResponse(result);
         }
 
         [HttpPut("stock")]
         [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status202Accepted)]
-        public async Task<IActionResult> UpdateProcuctStockAmountAsync([FromBody] DeleteCategoryRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProductStockAmountAsync([FromBody] UpdateProductStockAmountRequest request, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(request, cancellationToken);
-            return result.Success
-                ? Ok(result.Data)
-                : StatusCode(result.Code, result.Error);
+            return HandleResponse(result);
         }
     }
 }
