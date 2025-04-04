@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MicroWarehouse.Core.Abstractions\MicroWarehouse.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\MicroWarehouse.Data\MicroWarehouse.Data.csproj" />
   </ItemGroup>
 
 </Project>

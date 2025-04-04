@@ -1,5 +1,6 @@
 
 using MicroWarehouse.Data.Abstractions.DatabaseSettings;
+using MicroWarehouse.Extensions;
 
 namespace MicroWarehouse
 {
@@ -10,6 +11,10 @@ namespace MicroWarehouse
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.Configure<WarehouseDatabaseSettings>(
+                builder.Configuration.GetSection("WarehouseDatabase"));
+
+            builder.Services.AddRegistrations();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -17,9 +22,6 @@ namespace MicroWarehouse
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
-
-            builder.Services.Configure<WarehouseDatabaseSettings>(
-                builder.Configuration.GetSection("WarehouseDatabase"));
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
