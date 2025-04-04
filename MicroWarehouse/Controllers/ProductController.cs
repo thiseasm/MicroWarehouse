@@ -20,7 +20,7 @@ namespace MicroWarehouse.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProduct request, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(request, cancellationToken);
             return HandleResponse(result);

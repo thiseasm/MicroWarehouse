@@ -22,10 +22,16 @@ namespace MicroWarehouse.Data.Repositories
             var result = await _categoriesCollection.ReplaceOneAsync(x => x.CategoryId == categoryId, updatedCategory, cancellationToken: cancellationToken);
             return result.ModifiedCount > 0;
         }
+
         public async Task<bool> RemoveAsync(int categoryId, CancellationToken cancellationToken)
         {
             var result = await _categoriesCollection.DeleteOneAsync(x => x.CategoryId == categoryId, cancellationToken);
             return result.DeletedCount > 0;
+        }
+        public async Task<bool> ExistsAsync(int categoryId, CancellationToken cancellationToken)
+        {
+            var count = await _categoriesCollection.CountDocumentsAsync(x => x.CategoryId == categoryId, cancellationToken: cancellationToken);
+            return count > 0;
         }
 
         private static IMongoCollection<CategoryDto> InitializeMongoCollection(WarehouseDatabaseSettings settings)
