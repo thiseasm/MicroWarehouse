@@ -1,4 +1,6 @@
 
+using MicroWarehouse.Data.Abstractions.DatabaseSettings;
+
 namespace MicroWarehouse
 {
     public class Program
@@ -15,6 +17,9 @@ namespace MicroWarehouse
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            builder.Services.Configure<WarehouseDatabaseSettings>(
+                builder.Configuration.GetSection("WarehouseDatabase"));
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

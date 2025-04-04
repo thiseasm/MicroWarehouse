@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse", "MicroWarehouse\MicroWarehouse.csproj", "{B246BC07-E301-4023-8241-1052A9AF768F}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Core", "MicroWarehouse.Core\MicroWarehouse.Core.csproj", "{129F54BC-E295-4E6A-AF74-86A24D5B582E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Data.Abstractions", "MicroWarehouse.Data.Abstractions\MicroWarehouse.Data.Abstractions.csproj", "{1E84FA03-365A-44D9-8B13-219B6E79B617}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Data", "MicroWarehouse.Data\MicroWarehouse.Data.csproj", "{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1E84FA03-365A-44D9-8B13-219B6E79B617}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E84FA03-365A-44D9-8B13-219B6E79B617}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E84FA03-365A-44D9-8B13-219B6E79B617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
