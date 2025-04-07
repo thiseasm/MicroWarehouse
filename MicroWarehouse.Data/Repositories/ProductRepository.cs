@@ -34,6 +34,13 @@ namespace MicroWarehouse.Data.Repositories
             return result.ModifiedCount > 0;
         }
 
+        public async Task<bool> ReserveStockAsync(int productId, int reservationQuantity, CancellationToken cancellationToken)
+        {
+            var update = Builders<ProductDto>.Update.Inc(p => p.StockAmount, -reservationQuantity);
+            var result = await _productsCollection.UpdateOneAsync(p => p.ProductId == productId, update, cancellationToken: cancellationToken);
+            return result.ModifiedCount > 0;
+        }
+
         public async Task<bool> ProductsWithCategoryExistAsync(int categoryId, CancellationToken cancellationToken)
         {
             var count = await _productsCollection.CountDocumentsAsync(x => x.CategoryId == categoryId, cancellationToken: cancellationToken);

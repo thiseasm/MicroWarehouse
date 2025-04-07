@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Categories;
 using MicroWarehouse.Core.Abstractions.Models.Responses;
-using MicroWarehouse.Data.Abstractions.DTOs;
+using MicroWarehouse.Core.Mappings;
 using MicroWarehouse.Data.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Core.Handlers.Categories
@@ -15,14 +15,9 @@ namespace MicroWarehouse.Core.Handlers.Categories
             try
             {
                 //TODO remove magic string
+                var category = request.ToDto();
                 var newCategoryId = await counterRepository.IncrementCounterAsync("categories", cancellationToken);
-                var category = new CategoryDto
-                {
-                    CategoryId = newCategoryId,
-                    Name = request.Name,
-                    LowStockThreshold = request.LowStockThreshold,
-                    OutOfStockThreshold = request.OutOfStockThreshold
-                };
+                category.CategoryId = newCategoryId;
 
                 await categoryRepository.CreateAsync(category, cancellationToken);
                 return ApiResponse<int>.Created(newCategoryId);

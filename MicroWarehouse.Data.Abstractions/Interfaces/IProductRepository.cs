@@ -10,6 +10,7 @@ namespace MicroWarehouse.Data.Abstractions.Interfaces
         Task CreateAsync(ProductDto newProduct, CancellationToken cancellationToken = default);
         Task<bool> UpdateAsync(ProductDto updatedProduct, CancellationToken cancellationToken = default);
         Task<bool> UpdateStockAsync(int productId, int newStockAmount, CancellationToken cancellationToken = default);
+        Task<bool> ReserveStockAsync(int productId, int reservationQuantity, CancellationToken cancellationToken = default);
         Task<bool> ProductsWithCategoryExistAsync(int categoryId, CancellationToken cancellationToken = default);
     }
 }

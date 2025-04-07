@@ -18,7 +18,7 @@ namespace MicroWarehouse.Data.Repositories
 
         public async Task<bool> UpdateStatusAsync(int orderId, int newStatus, CancellationToken cancellationToken)
         {
-            var update = Builders<OrderDto>.Update.Set(p => p.Status, newStatus);
+            var update = Builders<OrderDto>.Update.Set(p => p.StatusId, newStatus);
             var result = await _ordersCollection.UpdateOneAsync(p => p.OrderId == orderId, update, cancellationToken: cancellationToken);
             return result.ModifiedCount > 0;
         }
