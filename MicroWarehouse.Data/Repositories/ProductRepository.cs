@@ -30,6 +30,12 @@ namespace MicroWarehouse.Data.Repositories
             return result.ModifiedCount > 0;
         }
 
+        public async Task<bool> ProductsWithCategoryExistAsync(int categoryId, CancellationToken cancellationToken)
+        {
+            var count = await _productsCollection.CountDocumentsAsync(x => x.CategoryId == categoryId, cancellationToken: cancellationToken);
+            return count > 0;
+        }
+
         private static IMongoCollection<ProductDto> InitializeMongoCollection(WarehouseDatabaseSettings settings)
         {
             var mongoClient = new MongoClient(settings.ConnectionString);

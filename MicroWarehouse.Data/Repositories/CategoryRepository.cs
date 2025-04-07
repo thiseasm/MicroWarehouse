@@ -17,9 +17,9 @@ namespace MicroWarehouse.Data.Repositories
 
         public async Task CreateAsync(CategoryDto newCategory, CancellationToken cancellationToken) => await _categoriesCollection.InsertOneAsync(newCategory, cancellationToken: cancellationToken);
 
-        public async Task<bool> UpdateAsync(int categoryId, CategoryDto updatedCategory, CancellationToken cancellationToken)
+        public async Task<bool> UpdateAsync(CategoryDto updatedCategory, CancellationToken cancellationToken)
         {
-            var result = await _categoriesCollection.ReplaceOneAsync(x => x.CategoryId == categoryId, updatedCategory, cancellationToken: cancellationToken);
+            var result = await _categoriesCollection.ReplaceOneAsync(x => x.CategoryId == updatedCategory.CategoryId, updatedCategory, cancellationToken: cancellationToken);
             return result.ModifiedCount > 0;
         }
 

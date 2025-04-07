@@ -1,5 +1,10 @@
 ﻿using FluentValidation;
+using MediatR;
 using MicroWarehouse.Core.Abstractions.Interfaces;
+using MicroWarehouse.Core.Abstractions.Models;
+using MicroWarehouse.Core.Abstractions.Models.Requests.Categories;
+using MicroWarehouse.Core.Abstractions.Models.Responses;
+using MicroWarehouse.Core.Handlers.Categories;
 using MicroWarehouse.Core.Services;
 using MicroWarehouse.Core.Validators.Orders;
 using MicroWarehouse.Data.Abstractions.Interfaces;
@@ -13,6 +18,12 @@ namespace MicroWarehouse.Extensions
         {
             //Mediator
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
+
+            //Handlers
+            services.AddTransient<IRequestHandler<GetAllCategoriesRequest, ApiResponse<IEnumerable<Category>>>, GetAllCategoriesRequestHandler>();
+            services.AddTransient<IRequestHandler<CreateCategoryRequest, ApiResponse<int>>, CreateCategoryRequestHandler>();
+            services.AddTransient<IRequestHandler<UpdateCategoryRequest, ApiResponse<Category>>, UpdateCategoryRequestHandler>();
+            services.AddTransient<IRequestHandler<DeleteCategoryRequest, ApiResponse<bool>>, DeleteCategoryRequestHandler>();
 
             //Services
             services.AddTransient<IIdGeneratorService, IdGeneratorService>();
