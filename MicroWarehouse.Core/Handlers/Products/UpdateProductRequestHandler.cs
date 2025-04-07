@@ -18,7 +18,7 @@ namespace MicroWarehouse.Core.Handlers.Products
                 if (!categoryExists)
                 {
                     var error = new Error { Message = $"Category with ID:{request.CategoryId} not found" };
-                    return ApiResponse<Product>.NotFound(error);
+                    return ApiResponse<Product>.BadRequest(error);
                 }
 
                 var productDto = request.ToDto();

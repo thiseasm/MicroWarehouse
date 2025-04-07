@@ -18,7 +18,7 @@ namespace MicroWarehouse.Core.Handlers.Products
                 if (!categoryExists)
                 {
                     var error = new Error { Message = $"Category with ID:{request.CategoryId} not found" };
-                    return ApiResponse<int>.NotFound(error);
+                    return ApiResponse<int>.BadRequest(error);
                 }
 
                 var newProductId = await counterRepository.IncrementCounterAsync("products", cancellationToken);

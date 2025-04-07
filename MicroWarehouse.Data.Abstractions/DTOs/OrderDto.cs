@@ -7,6 +7,7 @@ namespace MicroWarehouse.Data.Abstractions.DTOs
         [BsonId]
         public int OrderId { get; set; }
         public int Status { get; set; }
-        public List<OrderItemDto> OrderItems { get; set; } = [];
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
     }
 }

@@ -1,20 +1,30 @@
 ﻿using MediatR;
-using MicroWarehouse.Core.Abstractions.Models;
+using Microsoft.Extensions.Logging;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Orders;
 using MicroWarehouse.Core.Abstractions.Models.Responses;
 
 namespace MicroWarehouse.Core.Handlers.Orders
 {
-    public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest, ApiResponse<int>>
+    public class CreateOrderRequestHandler(ILogger<CreateOrderRequestHandler> logger) : IRequestHandler<CreateOrderRequest, ApiResponse<int>>
     {
         public async Task<ApiResponse<int>> Handle(CreateOrderRequest request, CancellationToken cancellationToken)
         {
-            var order = new Order
+            try
             {
-                OrderItems = request.Items
-            };
+                return ApiResponse<int>.Ok(0);
 
-            return await Task.FromResult(ApiResponse<int>.Ok(1));
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "{HandlerName} : Handle failed with Error: {Message}", nameof(CreateOrderRequestHandler), ex.Message);
+                var error = new Error
+                {
+                    Message = ex.Message
+                };
+
+                return ApiResponse<int>.InternalError(error);
+            }
         }
     }
 }

@@ -19,7 +19,11 @@ namespace MicroWarehouse.Data.Repositories
 
         public async Task<bool> UpdateAsync(ProductDto updatedProduct, CancellationToken cancellationToken)
         {
-            var result = await _productsCollection.ReplaceOneAsync(x => x.ProductId == updatedProduct.ProductId, updatedProduct, cancellationToken: cancellationToken);
+            var update = Builders<ProductDto>.Update
+                .Set(p => p.Name, updatedProduct.Name)
+                .Set(p => p.CategoryId, updatedProduct.CategoryId);
+
+            var result = await _productsCollection.UpdateOneAsync(x => x.ProductId == updatedProduct.ProductId, update, cancellationToken: cancellationToken);
             return result.ModifiedCount > 0;
         }
 
