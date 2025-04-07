@@ -6,13 +6,14 @@ namespace MicroWarehouse.Core.Mappings
 {
     public static class ProductMappings
     {
-        public static Product ToDomain(this ProductDto dto)
+        public static Product ToDomain(this ProductDto dto, CategoryDto categoryDto)
         {
             return new Product
             {
                 Id = dto.CategoryId,
                 Name = dto.Name,
-                Category = null //TODO Add category mapping
+                AvailableStock = dto.StockAmount,
+                Category = categoryDto.ToDomain()
             };
         }
 

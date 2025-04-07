@@ -4,7 +4,11 @@
     {
         public int Id { get; set; }
         public required string Name { get; set; }
+
+        public required int AvailableStock { get; set; }
         public required Category Category { get; set; }
-        //TODO: Add stock management properties
+        
+        public bool IsLowOnStock => AvailableStock <= Category.LowStockThreshold;
+        public bool IsOutOfStock => AvailableStock <= Category.OutOfStockThreshold;
     }
 }

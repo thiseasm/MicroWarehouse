@@ -29,7 +29,9 @@ namespace MicroWarehouse.Core.Handlers.Products
                     var error = new Error { Message = $"Could not update product with ID:{request.Id}" };
                     return ApiResponse<Product>.Conflict(error);
                 }
-                return ApiResponse<Product>.Ok(productDto.ToDomain());
+
+                var categoryDto = await categoryRepository.GetCategoryByIdAsync(request.CategoryId, cancellationToken);
+                return ApiResponse<Product>.Ok(productDto.ToDomain(categoryDto!));
             }
             catch (Exception ex)
             {
