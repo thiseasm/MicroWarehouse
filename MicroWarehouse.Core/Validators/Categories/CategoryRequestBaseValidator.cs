@@ -12,11 +12,12 @@ namespace MicroWarehouse.Core.Validators.Categories
                 .MaximumLength(100).WithMessage("Name must not exceed 100 characters.");
 
             RuleFor(x => x.LowStockThreshold)
-                .GreaterThanOrEqualTo(0).WithMessage("LowStockThreshold must be greater than or equal to 0.");
+                .GreaterThanOrEqualTo(0).WithMessage("LowStockThreshold must be greater than or equal to 0.")
+                .GreaterThan(x => x.OutOfStockThreshold).WithMessage("LowStockThreshold must be greater than OutOfStockThreshold."); ;
 
             RuleFor(x => x.OutOfStockThreshold)
-                .GreaterThanOrEqualTo(0).WithMessage("OutOfStockThreshold must be greater than or equal to 0.")
-                .GreaterThan(x => x.LowStockThreshold).WithMessage("OutOfStockThreshold must be greater than LowStockThreshold.");
+                .GreaterThanOrEqualTo(0).WithMessage("OutOfStockThreshold must be greater than or equal to 0.");
+
         }
     }
 }

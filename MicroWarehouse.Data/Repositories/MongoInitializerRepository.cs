@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using MicroWarehouse.Data.Abstractions.DatabaseSettings;
+using MicroWarehouse.Data.Abstractions.DTOs;
 using MicroWarehouse.Data.Abstractions.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -13,6 +14,7 @@ namespace MicroWarehouse.Data.Repositories
         private readonly string _productsCollectionName;
         private readonly string _categoriesCollectionName;
         private readonly string _ordersCollectionName;
+        private readonly string _countersCollectionName;
 
         public MongoInitializerRepository(IOptions<WarehouseDatabaseSettings> warehouseDatabaseSettings)
         {
@@ -22,16 +24,17 @@ namespace MicroWarehouse.Data.Repositories
             _productsCollectionName = warehouseDatabaseSettings.Value.ProductsCollectionName;
             _categoriesCollectionName = warehouseDatabaseSettings.Value.CategoriesCollectionName;
             _ordersCollectionName = warehouseDatabaseSettings.Value.OrdersCollectionName;
+            _countersCollectionName = warehouseDatabaseSettings.Value.CountersCollectionName;
         }
     
         public async Task InitializeAsync(CancellationToken cancellationToken)
         {
             var collections = (await _database.ListCollectionNamesAsync(cancellationToken: cancellationToken)).ToList();
 
-            if (!collections.Contains("counters"))
+            if (!collections.Contains(_countersCollectionName))
             {
-                await _database.CreateCollectionAsync("counters", cancellationToken: cancellationToken);
-                var counters = _database.GetCollection<BsonDocument>("counters");
+                await _database.CreateCollectionAsync(_countersCollectionName, cancellationToken: cancellationToken);
+                var counters = _database.GetCollection<BsonDocument>(_countersCollectionName);
 
                 var initialCounters = new[]
                 {

@@ -8,7 +8,8 @@ using MicroWarehouse.Core.Abstractions.Models.Responses;
 using MicroWarehouse.Core.Handlers.Categories;
 using MicroWarehouse.Core.Handlers.Products;
 using MicroWarehouse.Core.Services;
-using MicroWarehouse.Core.Validators.Orders;
+using MicroWarehouse.Core.Validators;
+using MicroWarehouse.Core.Validators.Categories;
 using MicroWarehouse.Data.Abstractions.Interfaces;
 using MicroWarehouse.Data.Repositories;
 
@@ -46,7 +47,8 @@ namespace MicroWarehouse.Extensions
 
         public static void AddFluentValidation(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssemblyContaining<CreateOrderRequestValidator>(ServiceLifetime.Transient);
+            services.AddValidatorsFromAssemblyContaining<CreateCategoryRequestValidator>(ServiceLifetime.Transient);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         }
     }
 }

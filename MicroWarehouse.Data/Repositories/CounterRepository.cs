@@ -13,7 +13,7 @@ namespace MicroWarehouse.Data.Repositories
         public async Task<int> IncrementCounterAsync(string entityName, CancellationToken cancellationToken)
         {
             var filter = Builders<CounterDto>.Filter.Eq(x => x.Id, entityName);
-            var update = Builders<CounterDto>.Update.Inc(x => x.Sequence, 1);
+            var update = Builders<CounterDto>.Update.Inc(nameof(CounterDto.Sequence), 1);
 
             var options = new FindOneAndUpdateOptions<CounterDto>
             {
@@ -29,7 +29,7 @@ namespace MicroWarehouse.Data.Repositories
         {
             var mongoClient = new MongoClient(settings.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(settings.DatabaseName);
-            return mongoDatabase.GetCollection<CounterDto>(settings.OrdersCollectionName);
+            return mongoDatabase.GetCollection<CounterDto>(settings.CountersCollectionName);
         }
     }
 }
