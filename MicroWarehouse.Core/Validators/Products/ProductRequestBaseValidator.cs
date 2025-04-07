@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Products;
-using MicroWarehouse.Data.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Core.Validators.Products
 {
     public abstract class ProductRequestBaseValidator<T> : AbstractValidator<T> where T : ProductRequestBase
     {
-        protected ProductRequestBaseValidator(ICategoryRepository categoryRepository)
+        protected ProductRequestBaseValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Name is required.")

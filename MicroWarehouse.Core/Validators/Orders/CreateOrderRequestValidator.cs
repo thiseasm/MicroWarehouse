@@ -11,10 +11,10 @@ namespace MicroWarehouse.Core.Validators.Orders
             RuleFor(x => x.Items)
                 .NotEmpty().WithMessage("Order must contain at least one item.")
                 .ForEach(x => x.SetValidator(orderItemValidator))
-                .Custom(ValidateNoDuplicateProductIds);
+                .Custom(ValidateNoDuplicateProductIdsExist);
         }
 
-        private static void ValidateNoDuplicateProductIds(IEnumerable<OrderItem> items, ValidationContext<CreateOrderRequest> context)
+        private static void ValidateNoDuplicateProductIdsExist(IEnumerable<OrderItem> items, ValidationContext<CreateOrderRequest> context)
         {
             var duplicateProductIds = items
                 .GroupBy(i => i.ProductId)

@@ -15,7 +15,6 @@ namespace MicroWarehouse
                 builder.Configuration.GetSection("WarehouseDatabase"));
 
             builder.Services.AddRegistrations();
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

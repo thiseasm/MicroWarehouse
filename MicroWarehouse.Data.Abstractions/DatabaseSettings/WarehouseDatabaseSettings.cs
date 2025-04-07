@@ -8,5 +8,6 @@ namespace MicroWarehouse.Data.Abstractions.DatabaseSettings
         public string ProductsCollectionName { get; set; } = null!;
         public string CategoriesCollectionName { get; set; } = null!;
         public string OrdersCollectionName { get; set; } = null!;
+        public string CountersCollectionName { get; set; } = null!;
     }
 }

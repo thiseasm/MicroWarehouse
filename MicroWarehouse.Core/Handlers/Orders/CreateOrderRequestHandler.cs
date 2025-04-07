@@ -1,12 +1,11 @@
 ﻿using MediatR;
-using MicroWarehouse.Core.Abstractions.Interfaces;
 using MicroWarehouse.Core.Abstractions.Models;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Orders;
 using MicroWarehouse.Core.Abstractions.Models.Responses;
 
-namespace MicroWarehouse.Core.Handlers
+namespace MicroWarehouse.Core.Handlers.Orders
 {
-    public class CreateOrderRequestHandler(IOrderService orderService) : IRequestHandler<CreateOrderRequest, ApiResponse<int>>
+    public class CreateOrderRequestHandler : IRequestHandler<CreateOrderRequest, ApiResponse<int>>
     {
         public async Task<ApiResponse<int>> Handle(CreateOrderRequest request, CancellationToken cancellationToken)
         {
@@ -15,7 +14,7 @@ namespace MicroWarehouse.Core.Handlers
                 OrderItems = request.Items
             };
 
-            return await orderService.CreateOrderAsync(order, cancellationToken);
+            return await Task.FromResult(ApiResponse<int>.Ok(1));
         }
     }
 }

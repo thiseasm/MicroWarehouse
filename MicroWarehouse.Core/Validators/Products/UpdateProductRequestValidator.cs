@@ -6,7 +6,7 @@ namespace MicroWarehouse.Core.Validators.Products
 {
     public class UpdateProductRequestValidator : ProductRequestBaseValidator<UpdateProductRequest>
     {
-        public UpdateProductRequestValidator(ICategoryRepository categoryRepository) : base(categoryRepository)
+        public UpdateProductRequestValidator(ICategoryRepository categoryRepository) : base()
         {
             RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("CategoryId must be greater than 0.");

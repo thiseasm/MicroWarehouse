@@ -6,7 +6,7 @@ namespace MicroWarehouse.Core.Validators.Products
 {
     public class CreateProductRequestValidator : ProductRequestBaseValidator<CreateProductRequest>
     {
-        public CreateProductRequestValidator(ICategoryRepository categoryRepository) : base(categoryRepository)
+        public CreateProductRequestValidator(ICategoryRepository categoryRepository) : base()
         {
             RuleFor(x => x.StockAmount)
                 .GreaterThanOrEqualTo(0).WithMessage("Starting stock amount must be greater than or equal to 0.");
