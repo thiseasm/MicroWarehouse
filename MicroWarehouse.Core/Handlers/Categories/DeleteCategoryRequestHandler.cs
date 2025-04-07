@@ -13,7 +13,7 @@ namespace MicroWarehouse.Core.Handlers.Categories
             try
             {
                 var categoryId = request.CategoryId;
-                var categoryExists = await categoryRepository.ExistsAsync(categoryId, cancellationToken);
+                var categoryExists = await categoryRepository.CategoryExistsAsync(categoryId, cancellationToken);
                 if (!categoryExists)
                 {
                     var error = new Error { Message = $"Category with ID:{categoryId} not found" };
@@ -34,7 +34,7 @@ namespace MicroWarehouse.Core.Handlers.Categories
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "{HandlerName} : Handle failed with Error deleting category: {Message}", nameof(DeleteCategoryRequestHandler), ex.Message);
+                logger.LogError(ex, "{HandlerName} : Handle failed with Error: {Message}", nameof(DeleteCategoryRequestHandler), ex.Message);
                 var error = new Error
                 {
                     Message = ex.Message

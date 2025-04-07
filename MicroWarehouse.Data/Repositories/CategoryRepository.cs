@@ -12,7 +12,7 @@ namespace MicroWarehouse.Data.Repositories
 
         public async Task<List<CategoryDto>> GetAllCategoriesAsync(CancellationToken cancellationToken) => await _categoriesCollection.Find(_ => true).ToListAsync(cancellationToken);
 
-        public async Task<CategoryDto?> GetAsync(int categoryId, CancellationToken cancellationToken) 
+        public async Task<CategoryDto?> GetCategoryByIdAsync(int categoryId, CancellationToken cancellationToken) 
             => await _categoriesCollection.Find(x => x.CategoryId == categoryId).FirstOrDefaultAsync(cancellationToken);
 
         public async Task CreateAsync(CategoryDto newCategory, CancellationToken cancellationToken) => await _categoriesCollection.InsertOneAsync(newCategory, cancellationToken: cancellationToken);
@@ -28,7 +28,8 @@ namespace MicroWarehouse.Data.Repositories
             var result = await _categoriesCollection.DeleteOneAsync(x => x.CategoryId == categoryId, cancellationToken);
             return result.DeletedCount > 0;
         }
-        public async Task<bool> ExistsAsync(int categoryId, CancellationToken cancellationToken)
+
+        public async Task<bool> CategoryExistsAsync(int categoryId, CancellationToken cancellationToken)
         {
             var count = await _categoriesCollection.CountDocumentsAsync(x => x.CategoryId == categoryId, cancellationToken: cancellationToken);
             return count > 0;

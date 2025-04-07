@@ -17,15 +17,15 @@ namespace MicroWarehouse.Data.Repositories
 
         public async Task CreateAsync(ProductDto newProduct, CancellationToken cancellationToken) => await _productsCollection.InsertOneAsync(newProduct, cancellationToken: cancellationToken);
 
-        public async Task<bool> UpdateAsync(int productId, ProductDto updatedProduct, CancellationToken cancellationToken)
+        public async Task<bool> UpdateAsync(ProductDto updatedProduct, CancellationToken cancellationToken)
         {
-            var result = await _productsCollection.ReplaceOneAsync(x => x.ProductId == productId, updatedProduct, cancellationToken: cancellationToken);
+            var result = await _productsCollection.ReplaceOneAsync(x => x.ProductId == updatedProduct.ProductId, updatedProduct, cancellationToken: cancellationToken);
             return result.ModifiedCount > 0;
         }
 
-        public async Task<bool> UpdateStockAsync(int productId, int newQuantity, CancellationToken cancellationToken)
+        public async Task<bool> UpdateStockAsync(int productId, int newStockAmount, CancellationToken cancellationToken)
         {
-            var update = Builders<ProductDto>.Update.Set(p => p.StockAmount, newQuantity);
+            var update = Builders<ProductDto>.Update.Set(p => p.StockAmount, newStockAmount);
             var result = await _productsCollection.UpdateOneAsync(p => p.ProductId == productId, update, cancellationToken: cancellationToken);
             return result.ModifiedCount > 0;
         }

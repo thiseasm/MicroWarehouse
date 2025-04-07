@@ -27,7 +27,7 @@ namespace MicroWarehouse.Core.Handlers.Categories
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "{HandlerName} : Handle failed with Error creating category: {Message}", nameof(CreateCategoryRequestHandler), ex.Message);
+                logger.LogError(ex, "{HandlerName} : Handle failed with Error {Message}", nameof(UpdateCategoryRequestHandler), ex.Message);
                 var error = new Error
                 {
                     Message = ex.Message
