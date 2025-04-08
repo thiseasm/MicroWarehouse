@@ -10,6 +10,8 @@ namespace MicroWarehouse.Controllers
     [Route("api/orders")]
     public class OrderController(ILogger<OrderController> logger, IMediator mediator) : ApiControllerBase
     {
+        public ILogger<OrderController> Logger { get; } = logger;
+
         [HttpPost]
         [ProducesResponseType(typeof(ApiResponse<Order>), StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderRequest request, CancellationToken cancellationToken)

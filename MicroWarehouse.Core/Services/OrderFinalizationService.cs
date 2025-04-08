@@ -1,11 +1,13 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MassTransit;
+using Microsoft.Extensions.Logging;
 using MicroWarehouse.Core.Abstractions.Enumerations;
+using MicroWarehouse.Core.Abstractions.Events;
 using MicroWarehouse.Core.Abstractions.Interfaces;
 using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Core.Services;
 
-public class OrderFinalizationService(ILogger<OrderFinalizationService> logger, IOrderRepository orderRepository, IProductRepository productRepository) : IOrderFinalizationService
+public class OrderFinalizationService(ILogger<OrderFinalizationService> logger, IOrderRepository orderRepository, IProductRepository productRepository, IPublishEndpoint publishEndpoint) : IOrderFinalizationService
 {
     public async Task<FinalizationStatus> ApproveOrderAsync(int orderId, CancellationToken cancellationToken)
     {
@@ -59,6 +61,12 @@ public class OrderFinalizationService(ILogger<OrderFinalizationService> logger, 
             }
 
             var result = await orderRepository.UpdateStatusAsync(orderId, (int)OrderStatus.Rejected, cancellationToken);
+
+            await publishEndpoint.Publish(new StockUpdated
+            {
+                ProductId = orderDto.ProductId,
+            }, cancellationToken);
+
             return result
                 ? FinalizationStatus.Success
                 : FinalizationStatus.UnknownError;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MicroWarehouse.Core.Abstractions.Enumerations;
 using MicroWarehouse.Infrastructure.Abstractions.DatabaseSettings;
 using MicroWarehouse.Infrastructure.Abstractions.DTOs;
 using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
@@ -22,6 +23,12 @@ namespace MicroWarehouse.Infrastructure.Repositories
             var result = await _ordersCollection.UpdateOneAsync(p => p.OrderId == orderId, update, cancellationToken: cancellationToken);
             return result.ModifiedCount > 0;
         }
+
+        public Task<List<OrderDto>> GetPendingStockOrdersByProductAsync(int productId, CancellationToken cancellationToken = default)
+            => _ordersCollection
+                .Find(x => x.ProductId == productId && x.StatusId == (int)OrderStatus.AwaitingStock)
+                .SortBy(x => x.CreatedAt)
+                .ToListAsync(cancellationToken);
 
         private static IMongoCollection<OrderDto> InitializeMongoCollection(WarehouseDatabaseSettings settings)
         {

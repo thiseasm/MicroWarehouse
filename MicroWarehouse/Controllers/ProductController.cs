@@ -8,7 +8,7 @@ namespace MicroWarehouse.Controllers
 {
     [ApiController]
     [Route("api/products")]
-    public class ProductController(ILogger<ProductController> logger, IMediator mediator) : ApiControllerBase
+    public class ProductController(IMediator mediator) : ApiControllerBase
     {
         [HttpGet]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<Product>>), StatusCodes.Status200OK)]

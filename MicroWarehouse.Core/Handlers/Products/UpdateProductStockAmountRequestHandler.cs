@@ -1,12 +1,14 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 using Microsoft.Extensions.Logging;
+using MicroWarehouse.Core.Abstractions.Events;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Products;
 using MicroWarehouse.Core.Abstractions.Models.Responses;
 using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Core.Handlers.Products
 {
-    public class UpdateProductStockAmountRequestHandler(ILogger<UpdateProductStockAmountRequestHandler> logger, IProductRepository productRepository) 
+    public class UpdateProductStockAmountRequestHandler(ILogger<UpdateProductStockAmountRequestHandler> logger, IProductRepository productRepository, IPublishEndpoint publishEndpoint) 
         : IRequestHandler<UpdateProductStockAmountRequest, ApiResponse<bool>>
     {
         public async Task<ApiResponse<bool>> Handle(UpdateProductStockAmountRequest request, CancellationToken cancellationToken)
@@ -26,6 +28,11 @@ namespace MicroWarehouse.Core.Handlers.Products
                     var error = new Error { Message = $"Failed to update stock amount for product with ID:{request.ProductId}" };
                     return ApiResponse<bool>.InternalError(error);
                 }
+
+                await publishEndpoint.Publish(new StockUpdated
+                {
+                    ProductId = request.ProductId,
+                }, cancellationToken);
 
                 return ApiResponse<bool>.Ok(result);
             }

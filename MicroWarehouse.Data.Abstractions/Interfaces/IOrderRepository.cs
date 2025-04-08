@@ -11,5 +11,7 @@ namespace MicroWarehouse.Infrastructure.Abstractions.Interfaces
         public Task CreateOrderAsync(OrderDto newOrder, CancellationToken cancellationToken = default);
 
         public Task<bool> UpdateStatusAsync(int orderId, int newStatus, CancellationToken cancellationToken = default);
+
+        public Task<List<OrderDto>> GetPendingStockOrdersByProductAsync(int productId, CancellationToken cancellationToken = default);
     }
 }

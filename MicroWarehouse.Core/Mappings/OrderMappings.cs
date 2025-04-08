@@ -13,7 +13,8 @@ namespace MicroWarehouse.Core.Mappings
             {
                 ProductId = request.ProductId,
                 Quantity = request.Quantity,
-                StatusId = (int)status
+                StatusId = (int)status,
+                CreatedAt = DateTime.UtcNow
             };
         }
         public static Order ToDomain(this OrderDto dto)
@@ -23,7 +24,8 @@ namespace MicroWarehouse.Core.Mappings
                 Id = dto.OrderId,
                 ProductId = dto.ProductId,
                 Quantity = dto.Quantity,
-                Status = (OrderStatus)dto.StatusId
+                Status = (OrderStatus)dto.StatusId,
+                CreatedAt = dto.CreatedAt
             };
         }
     }

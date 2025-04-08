@@ -68,6 +68,7 @@ namespace MicroWarehouse.Extensions
                     .InMemoryRepository();
 
                 x.AddConsumer<OrderReviewRequestedConsumer>();
+                x.AddConsumer<StockUpdatedConsumer>();
 
                 x.UsingRabbitMq((context, cfg) =>
                 {

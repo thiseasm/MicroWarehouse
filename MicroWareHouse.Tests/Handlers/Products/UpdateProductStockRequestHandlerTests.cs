@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Products;
 using MicroWarehouse.Core.Handlers.Products;
@@ -13,13 +14,15 @@ namespace MicroWareHouse.Tests.Handlers.Products
     {
         private readonly ILogger<UpdateProductStockAmountRequestHandler> _logger;
         private readonly IProductRepository _productRepository;
+        private readonly IPublishEndpoint _publishEndpoint;
         private readonly UpdateProductStockAmountRequestHandler _handler;
 
         public UpdateProductStockAmountRequestHandlerTests()
         {
             _logger = Substitute.For<ILogger<UpdateProductStockAmountRequestHandler>>();
             _productRepository = Substitute.For<IProductRepository>();
-            _handler = new UpdateProductStockAmountRequestHandler(_logger, _productRepository);
+            _publishEndpoint = Substitute.For<IPublishEndpoint>();
+            _handler = new UpdateProductStockAmountRequestHandler(_logger, _productRepository, _publishEndpoint);
         }
 
         [Fact]

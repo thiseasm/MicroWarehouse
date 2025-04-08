@@ -1,4 +1,5 @@
 using FluentAssertions;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using MicroWarehouse.Core.Abstractions.Enumerations;
 using MicroWarehouse.Core.Services;
@@ -15,6 +16,7 @@ namespace MicroWareHouse.Tests.Services
         private readonly ILogger<OrderFinalizationService> _logger;
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IPublishEndpoint _publishEndpoint;
         private readonly OrderFinalizationService _service;
 
         public OrderFinalizationServiceTests()
@@ -22,7 +24,8 @@ namespace MicroWareHouse.Tests.Services
             _logger = Substitute.For<ILogger<OrderFinalizationService>>();
             _orderRepository = Substitute.For<IOrderRepository>();
             _productRepository = Substitute.For<IProductRepository>();
-            _service = new OrderFinalizationService(_logger, _orderRepository, _productRepository);
+            _publishEndpoint = Substitute.For<IPublishEndpoint>();
+            _service = new OrderFinalizationService(_logger, _orderRepository, _productRepository, _publishEndpoint);
         }
 
         #region ApproveOrderAsync
