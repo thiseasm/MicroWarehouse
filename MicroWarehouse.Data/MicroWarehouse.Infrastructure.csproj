@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MicroWarehouse.Contracts\MicroWarehouse.Contracts.csproj" />
+    <ProjectReference Include="..\MicroWarehouse.Core.Abstractions\MicroWarehouse.Core.Abstractions.csproj" />
     <ProjectReference Include="..\MicroWarehouse.Data.Abstractions\MicroWarehouse.Infrastructure.Abstractions.csproj" />
   </ItemGroup>
 

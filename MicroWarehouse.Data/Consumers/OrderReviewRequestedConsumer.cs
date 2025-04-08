@@ -24,8 +24,6 @@ namespace MicroWarehouse.Infrastructure.Consumers
                 {
                     CorrelationId = context.Message.CorrelationId,
                     OrderId = context.Message.OrderId,
-                    ProductId = context.Message.ProductId,
-                    Quantity = context.Message.Quantity,
                     Reason = "Quantity too high for manual approval"
                 });
             }

@@ -83,7 +83,6 @@ namespace MicroWarehouse.Core.Handlers.Orders
             {
                 CorrelationId = Guid.NewGuid(),
                 OrderId = order.OrderId,
-                ProductId = order.ProductId,
                 Quantity = order.Quantity
             }, cancellationToken);
 

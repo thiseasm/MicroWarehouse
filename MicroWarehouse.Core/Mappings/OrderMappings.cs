@@ -13,7 +13,7 @@ namespace MicroWarehouse.Core.Mappings
             {
                 ProductId = request.ProductId,
                 Quantity = request.Quantity,
-                OrderId = (int)status
+                StatusId = (int)status
             };
         }
         public static Order ToDomain(this OrderDto dto)

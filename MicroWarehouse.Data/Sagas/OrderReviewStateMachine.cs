@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using MicroWarehouse.Contracts.Messaging;
+using MicroWarehouse.Core.Abstractions.Interfaces;
 using MicroWarehouse.Infrastructure.Abstractions.Sagas;
 
 namespace MicroWarehouse.Infrastructure.Sagas
@@ -13,8 +14,8 @@ namespace MicroWarehouse.Infrastructure.Sagas
         public Event<IOrderReviewRequested> OrderReviewRequested { get; private set; }
         public Event<IOrderReviewApproved> OrderReviewApproved { get; private set; }
         public Event<IOrderReviewRejected> OrderReviewRejected { get; private set; }
-
-        public OrderReviewStateMachine()
+         
+        public OrderReviewStateMachine(IOrderFinalizationService orderFinalizationService)
         {
             InstanceState(x => x.CurrentState);
 
@@ -34,11 +35,11 @@ namespace MicroWarehouse.Infrastructure.Sagas
             During(AwaitingReview,
                 When(OrderReviewApproved)
                     .TransitionTo(Approved)
-                    .ThenAsync(context => Console.Out.WriteLineAsync($"Order {context.Saga.OrderId} approved")),
+                    .ThenAsync(async context => await orderFinalizationService.ApproveOrderAsync(context.Message.OrderId)),
 
                 When(OrderReviewRejected)
                     .TransitionTo(Rejected)
-                    .ThenAsync(context => Console.Out.WriteLineAsync($"Order {context.Saga.OrderId} rejected"))
+                    .ThenAsync(async context => await orderFinalizationService.RejectOrderAsync(context.Message.OrderId))
             );
         }
     }

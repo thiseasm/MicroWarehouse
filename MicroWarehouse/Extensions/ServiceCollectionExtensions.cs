@@ -4,9 +4,11 @@ using MediatR;
 using MicroWarehouse.Core.Abstractions.Interfaces;
 using MicroWarehouse.Core.Abstractions.Models;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Categories;
+using MicroWarehouse.Core.Abstractions.Models.Requests.Orders;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Products;
 using MicroWarehouse.Core.Abstractions.Models.Responses;
 using MicroWarehouse.Core.Handlers.Categories;
+using MicroWarehouse.Core.Handlers.Orders;
 using MicroWarehouse.Core.Handlers.Products;
 using MicroWarehouse.Core.Services;
 using MicroWarehouse.Core.Validators;
@@ -37,9 +39,12 @@ namespace MicroWarehouse.Extensions
             services.AddTransient<IRequestHandler<UpdateProductRequest, ApiResponse<Product>>, UpdateProductRequestHandler>();
             services.AddTransient<IRequestHandler<UpdateProductStockAmountRequest, ApiResponse<bool>>, UpdateProductStockAmountRequestHandler>();
 
+            services.AddTransient<IRequestHandler<CreateOrderRequest, ApiResponse<int>>, CreateOrderRequestHandler>();
+
             //Services
-            services.AddTransient<IIdGeneratorService, IdGeneratorService>();
+            services.AddSingleton<IIdGeneratorService, IdGeneratorService>();
             services.AddSingleton<IMongoInitializationService, MongoInitializationService>();
+            services.AddSingleton<IOrderFinalizationService, OrderFinalizationService>();
 
             //Repositories
             services.AddSingleton<IProductRepository, ProductRepository>();
