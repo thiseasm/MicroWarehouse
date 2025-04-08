@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MassTransit;
 using MediatR;
 using MicroWarehouse.Core.Abstractions.Interfaces;
 using MicroWarehouse.Core.Abstractions.Models;
@@ -11,7 +12,10 @@ using MicroWarehouse.Core.Services;
 using MicroWarehouse.Core.Validators;
 using MicroWarehouse.Core.Validators.Categories;
 using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
+using MicroWarehouse.Infrastructure.Abstractions.Sagas;
+using MicroWarehouse.Infrastructure.Consumers;
 using MicroWarehouse.Infrastructure.Repositories;
+using MicroWarehouse.Infrastructure.Sagas;
 
 namespace MicroWarehouse.Extensions
 {
@@ -49,6 +53,22 @@ namespace MicroWarehouse.Extensions
         {
             services.AddValidatorsFromAssemblyContaining<CreateCategoryRequestValidator>(ServiceLifetime.Transient);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        }
+
+        public static void AddMessaging(this IServiceCollection services)
+        {
+            services.AddMassTransit(x =>
+            {
+                x.AddSagaStateMachine<OrderReviewStateMachine, OrderReviewState>()
+                    .InMemoryRepository();
+
+                x.AddConsumer<OrderReviewRequestedConsumer>();
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
         }
     }
 }

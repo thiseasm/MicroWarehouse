@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MicroWarehouse.Contracts\MicroWarehouse.Contracts.csproj" />
     <ProjectReference Include="..\MicroWarehouse.Core.Abstractions\MicroWarehouse.Core.Abstractions.csproj" />
     <ProjectReference Include="..\MicroWarehouse.Data.Abstractions\MicroWarehouse.Infrastructure.Abstractions.csproj" />
   </ItemGroup>
@@ -14,10 +15,6 @@
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="8.4.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="StateMachines\" />
   </ItemGroup>
 
 </Project>

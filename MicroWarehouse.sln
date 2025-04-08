@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Infrastructure", "MicroWarehouse.Data\MicroWarehouse.Infrastructure.csproj", "{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Contracts", "MicroWarehouse.Contracts\MicroWarehouse.Contracts.csproj", "{E749DD10-4832-4B28-811E-BE315DF47427}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E749DD10-4832-4B28-811E-BE315DF47427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E749DD10-4832-4B28-811E-BE315DF47427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E749DD10-4832-4B28-811E-BE315DF47427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E749DD10-4832-4B28-811E-BE315DF47427}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

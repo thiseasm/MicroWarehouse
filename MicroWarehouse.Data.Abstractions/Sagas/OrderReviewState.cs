@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 
-namespace MicroWarehouse.Core.Abstractions.States
+namespace MicroWarehouse.Infrastructure.Abstractions.Sagas
 {
     public class OrderReviewState : SagaStateMachineInstance
     {

@@ -1,5 +1,8 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MassTransit.Transports;
+using MediatR;
 using Microsoft.Extensions.Logging;
+using MicroWarehouse.Contracts.Messaging;
 using MicroWarehouse.Core.Abstractions.Enumerations;
 using MicroWarehouse.Core.Abstractions.Interfaces;
 using MicroWarehouse.Core.Abstractions.Models;
@@ -14,7 +17,8 @@ namespace MicroWarehouse.Core.Handlers.Orders
         IOrderRepository orderRepository,
         IProductRepository productRepository,
         ICategoryRepository categoryRepository,
-        IIdGeneratorService idGeneratorService) : IRequestHandler<CreateOrderRequest, ApiResponse<int>>
+        IIdGeneratorService idGeneratorService,
+        IPublishEndpoint publishEndpoint) : IRequestHandler<CreateOrderRequest, ApiResponse<int>>
     {
         public async Task<ApiResponse<int>> Handle(CreateOrderRequest request, CancellationToken cancellationToken)
         {
@@ -75,7 +79,13 @@ namespace MicroWarehouse.Core.Handlers.Orders
             order.OrderId = newOrderId;
             await orderRepository.CreateOrderAsync(order, cancellationToken);
 
-            //communicate with MassTransit here to get approval
+            await publishEndpoint.Publish<IOrderReviewRequested>(new
+            {
+                CorrelationId = Guid.NewGuid(),
+                OrderId = order.OrderId,
+                ProductId = order.ProductId,
+                Quantity = order.Quantity
+            }, cancellationToken);
 
             return ApiResponse<int>.Ok(newOrderId);
         }
