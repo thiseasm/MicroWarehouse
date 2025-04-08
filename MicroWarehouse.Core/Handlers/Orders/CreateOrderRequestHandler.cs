@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using MassTransit.Transports;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using MicroWarehouse.Contracts.Messaging;
@@ -61,8 +60,7 @@ namespace MicroWarehouse.Core.Handlers.Orders
             }
         }
 
-        private async Task<ApiResponse<int>> HandleLowStockOrderAsync(CreateOrderRequest request, Product product,
-            CancellationToken cancellationToken)
+        private async Task<ApiResponse<int>> HandleLowStockOrderAsync(CreateOrderRequest request, Product product, CancellationToken cancellationToken)
         {
             var order = request.ToDto(OrderStatus.UnderReview);
             var reservationResult = await productRepository.ReserveStockAsync(product.Id, request.Quantity, cancellationToken);
