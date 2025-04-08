@@ -8,7 +8,7 @@ using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Core.Handlers.Categories
 {
-    public class GetAllCategoriesRequestHandler(ILogger<GetAllCategoriesRequest> logger, ICategoryRepository categoryRepository) : IRequestHandler<GetAllCategoriesRequest, ApiResponse<IEnumerable<Category>>>
+    public class GetAllCategoriesRequestHandler(ILogger<GetAllCategoriesRequestHandler> logger, ICategoryRepository categoryRepository) : IRequestHandler<GetAllCategoriesRequest, ApiResponse<IEnumerable<Category>>>
     {
         public async Task<ApiResponse<IEnumerable<Category>>> Handle(GetAllCategoriesRequest request, CancellationToken cancellationToken)
         {

@@ -9,7 +9,7 @@ using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Core.Handlers.Categories
 {
-    public class UpdateCategoryRequestHandler(ILogger<UpdateCategoryRequest> logger, ICategoryRepository categoryRepository) : IRequestHandler<UpdateCategoryRequest, ApiResponse<Category>>
+    public class UpdateCategoryRequestHandler(ILogger<UpdateCategoryRequestHandler> logger, ICategoryRepository categoryRepository) : IRequestHandler<UpdateCategoryRequest, ApiResponse<Category>>
     {
         public async Task<ApiResponse<Category>> Handle(UpdateCategoryRequest request, CancellationToken cancellationToken)
         {
@@ -23,6 +23,7 @@ namespace MicroWarehouse.Core.Handlers.Categories
                     var error = new Error { Message = $"Could not update category with ID:{request.Id}" };
                     return ApiResponse<Category>.Conflict(error);
                 }
+
                 return ApiResponse<Category>.Ok(categoryDto.ToDomain());
             }
             catch (Exception ex)

@@ -7,7 +7,7 @@ using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 
-namespace MicroWareHouse.Tests.Handlers.Product
+namespace MicroWareHouse.Tests.Handlers.Products
 {
     public class GetAllProductsRequestHandlerTests
     {
