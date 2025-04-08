@@ -1,5 +1,5 @@
 ﻿
-namespace MicroWarehouse.Data.Abstractions.DatabaseSettings
+namespace MicroWarehouse.Infrastructure.Abstractions.DatabaseSettings
 {
     public class WarehouseDatabaseSettings
     {

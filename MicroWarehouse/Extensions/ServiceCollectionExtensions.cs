@@ -10,8 +10,8 @@ using MicroWarehouse.Core.Handlers.Products;
 using MicroWarehouse.Core.Services;
 using MicroWarehouse.Core.Validators;
 using MicroWarehouse.Core.Validators.Categories;
-using MicroWarehouse.Data.Abstractions.Interfaces;
-using MicroWarehouse.Data.Repositories;
+using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
+using MicroWarehouse.Infrastructure.Repositories;
 
 namespace MicroWarehouse.Extensions
 {

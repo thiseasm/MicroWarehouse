@@ -1,7 +1,7 @@
 ﻿using MicroWarehouse.Core.Abstractions.Enumerations;
 using MicroWarehouse.Core.Abstractions.Models;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Orders;
-using MicroWarehouse.Data.Abstractions.DTOs;
+using MicroWarehouse.Infrastructure.Abstractions.DTOs;
 
 namespace MicroWarehouse.Core.Mappings
 {

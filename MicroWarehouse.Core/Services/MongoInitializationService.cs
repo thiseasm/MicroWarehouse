@@ -1,5 +1,5 @@
 ﻿using MicroWarehouse.Core.Abstractions.Interfaces;
-using MicroWarehouse.Data.Abstractions.Interfaces;
+using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Core.Services
 {

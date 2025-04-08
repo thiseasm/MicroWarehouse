@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MicroWarehouse.Data.Abstractions\MicroWarehouse.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\MicroWarehouse.Data.Abstractions\MicroWarehouse.Infrastructure.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

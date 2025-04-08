@@ -1,4 +1,4 @@
-﻿namespace MicroWarehouse.Data.Abstractions.Interfaces
+﻿namespace MicroWarehouse.Infrastructure.Abstractions.Interfaces
 {
     public interface IMongoInitializerRepository
     {

@@ -1,6 +1,6 @@
-﻿using MicroWarehouse.Data.Abstractions.DTOs;
+﻿using MicroWarehouse.Infrastructure.Abstractions.DTOs;
 
-namespace MicroWarehouse.Data.Abstractions.Interfaces
+namespace MicroWarehouse.Infrastructure.Abstractions.Interfaces
 {
     public interface IProductRepository
     {

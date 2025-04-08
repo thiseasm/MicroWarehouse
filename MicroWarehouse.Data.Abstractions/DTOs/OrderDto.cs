@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace MicroWarehouse.Data.Abstractions.DTOs
+namespace MicroWarehouse.Infrastructure.Abstractions.DTOs
 {
     public class OrderDto
     {

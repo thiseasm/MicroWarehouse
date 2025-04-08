@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Core.Abstrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Core", "MicroWarehouse.Core\MicroWarehouse.Core.csproj", "{129F54BC-E295-4E6A-AF74-86A24D5B582E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Data.Abstractions", "MicroWarehouse.Data.Abstractions\MicroWarehouse.Data.Abstractions.csproj", "{1E84FA03-365A-44D9-8B13-219B6E79B617}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Infrastructure.Abstractions", "MicroWarehouse.Data.Abstractions\MicroWarehouse.Infrastructure.Abstractions.csproj", "{1E84FA03-365A-44D9-8B13-219B6E79B617}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Data", "MicroWarehouse.Data\MicroWarehouse.Data.csproj", "{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWarehouse.Infrastructure", "MicroWarehouse.Data\MicroWarehouse.Infrastructure.csproj", "{F14DB3CF-93DF-481A-BD9B-BC7C8B43D32D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +42,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27C6DEF0-CAB9-47E4-A558-88D74863ADE5}
 	EndGlobalSection
 EndGlobal

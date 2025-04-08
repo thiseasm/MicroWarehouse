@@ -1,6 +1,5 @@
-
-using MicroWarehouse.Data.Abstractions.DatabaseSettings;
 using MicroWarehouse.Extensions;
+using MicroWarehouse.Infrastructure.Abstractions.DatabaseSettings;
 
 namespace MicroWarehouse
 {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
-using MicroWarehouse.Data.Abstractions.DatabaseSettings;
-using MicroWarehouse.Data.Abstractions.DTOs;
-using MicroWarehouse.Data.Abstractions.Interfaces;
+using MicroWarehouse.Infrastructure.Abstractions.DatabaseSettings;
+using MicroWarehouse.Infrastructure.Abstractions.DTOs;
+using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
 using MongoDB.Driver;
 
-namespace MicroWarehouse.Data.Repositories
+namespace MicroWarehouse.Infrastructure.Repositories
 {
     public class CounterRepository(IOptions<WarehouseDatabaseSettings> warehouseDatabaseSettings) : ICounterRepository
     {

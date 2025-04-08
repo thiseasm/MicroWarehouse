@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Products;
 using MicroWarehouse.Core.Abstractions.Models.Responses;
-using MicroWarehouse.Data.Abstractions.Interfaces;
+using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Core.Handlers.Products
 {

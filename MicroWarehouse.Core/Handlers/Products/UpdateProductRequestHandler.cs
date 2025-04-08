@@ -4,7 +4,7 @@ using MicroWarehouse.Core.Abstractions.Models;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Products;
 using MicroWarehouse.Core.Abstractions.Models.Responses;
 using MicroWarehouse.Core.Mappings;
-using MicroWarehouse.Data.Abstractions.Interfaces;
+using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Core.Handlers.Products
 {
