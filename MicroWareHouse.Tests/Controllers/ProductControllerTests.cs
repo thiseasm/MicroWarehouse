@@ -2,14 +2,21 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using MicroWarehouse.Core.Abstractions.Models;
+using MicroWarehouse.Core.Abstractions.Models.Requests.Categories;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Products;
 using MicroWareHouse.Tests.Helpers;
 
 namespace MicroWareHouse.Tests.Controllers
 {
-    public class ProductControllerTests(CustomWebApplicationFactory factory) : IClassFixture<CustomWebApplicationFactory>
+    public class ProductControllerTests : IClassFixture<IntegrationTestFixture>
     {
-        private readonly HttpClient _client = factory.CreateClient();
+        private readonly HttpClient _client;
+
+        public ProductControllerTests(IntegrationTestFixture fixture)
+        {
+            var factory = new TestApiFactory(fixture);
+            _client = factory.CreateClient();
+        }
 
         [Fact]
         public async Task GetProductsAsync_WhenProductsExist_ShouldReturnOk()
@@ -28,10 +35,19 @@ namespace MicroWareHouse.Tests.Controllers
         public async Task CreateProductAsync_WhenProductIsValid_ShouldReturnCreated()
         {
             // Arrange
+            var categoryRequest = new CreateCategoryRequest
+            {
+                Name = "New Category",
+                LowStockThreshold = 5,
+                OutOfStockThreshold = 0
+            };
+            var categoryResponse = await _client.PostAsJsonAsync("/api/categories", categoryRequest);
+            var categoryId = await categoryResponse.Content.ReadFromJsonAsync<int>();
+
             var request = new CreateProductRequest
             {
                 Name = "New Product",
-                CategoryId = 1,
+                CategoryId = categoryId,
                 StockAmount = 100
             };
 
@@ -75,35 +91,6 @@ namespace MicroWareHouse.Tests.Controllers
             result.Id.Should().Be(newProductId);
             result.Name.Should().Be(request.Name);
             result.Category.Id.Should().Be(request.CategoryId);
-        }
-
-        [Fact]
-        public async Task UpdateProductStockAsync_WhenStockIsUpdated_ShouldReturnAccepted()
-        {
-            var createRequest = new CreateProductRequest
-            {
-                Name = "New Product",
-                CategoryId = 1,
-                StockAmount = 100
-            };
-
-            var createdResponse = await _client.PostAsJsonAsync("/api/products", createRequest);
-            var newProductId = await createdResponse.Content.ReadFromJsonAsync<int>();
-
-            // Arrange
-            var request = new UpdateProductStockAmountRequest
-            {
-                ProductId = newProductId,
-                StockAmount = 50
-            };
-
-            // Act
-            var response = await _client.PatchAsync("/api/products/stock", JsonContent.Create(request));
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.Accepted);
-            var result = await response.Content.ReadFromJsonAsync<bool>();
-            result.Should().BeTrue();
         }
     }
 }

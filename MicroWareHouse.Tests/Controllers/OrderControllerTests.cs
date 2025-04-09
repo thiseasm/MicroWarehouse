@@ -4,16 +4,22 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using MicroWarehouse.Core.Abstractions.Enumerations;
 using MicroWarehouse.Core.Abstractions.Models;
+using MicroWarehouse.Core.Abstractions.Models.Requests.Categories;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Orders;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Products;
-using MicroWarehouse.Core.Abstractions.Models.Responses;
 using MicroWareHouse.Tests.Helpers;
 
 namespace MicroWareHouse.Tests.Controllers
 {
-    public class OrderControllerTests(CustomWebApplicationFactory factory) : IClassFixture<CustomWebApplicationFactory>
+    public class OrderControllerTests : IClassFixture<IntegrationTestFixture>
     {
-        private readonly HttpClient _client = factory.CreateClient();
+        private readonly HttpClient _client;
+
+        public OrderControllerTests(IntegrationTestFixture fixture)
+        {
+            var factory = new TestApiFactory(fixture);
+            _client = factory.CreateClient();
+        }
 
         [Fact]
         public async Task GetOrdersAsync_WhenOrdersExist_ShouldReturnOk()
@@ -32,10 +38,19 @@ namespace MicroWareHouse.Tests.Controllers
         public async Task CreateOrderAsync_WhenOrderIsValid_ShouldReturnCreated()
         {
             // Arrange
+            var categoryRequest = new CreateCategoryRequest
+            {
+                Name = "New Category",
+                LowStockThreshold = 5,
+                OutOfStockThreshold = 0
+            };
+            var categoryResponse = await _client.PostAsJsonAsync("/api/categories", categoryRequest);
+            var categoryId = await categoryResponse.Content.ReadFromJsonAsync<int>();
+
             var createProductRequest = new CreateProductRequest
             {
                 Name = "Product for Order",
-                CategoryId = 1,
+                CategoryId = categoryId,
                 StockAmount = 100
             };
 
@@ -83,10 +98,19 @@ namespace MicroWareHouse.Tests.Controllers
         public async Task CreateOrderAsync_WhenStockIsInsufficient_ShouldReturnConflict()
         {
             // Arrange
+            var categoryRequest = new CreateCategoryRequest
+            {
+                Name = "New Category",
+                LowStockThreshold = 5,
+                OutOfStockThreshold = 0
+            };
+            var categoryResponse = await _client.PostAsJsonAsync("/api/categories", categoryRequest);
+            var categoryId = await categoryResponse.Content.ReadFromJsonAsync<int>();
+
             var createProductRequest = new CreateProductRequest
             {
                 Name = "Product with Low Stock",
-                CategoryId = 1,
+                CategoryId = categoryId,
                 StockAmount = 5 
             };
 

@@ -7,9 +7,15 @@ using MicroWareHouse.Tests.Helpers;
 
 namespace MicroWareHouse.Tests.Controllers
 {
-    public class CategoryControllerTests(CustomWebApplicationFactory factory) : IClassFixture<CustomWebApplicationFactory>
+    public class CategoryControllerTests : IClassFixture<IntegrationTestFixture>
     {
-        private readonly HttpClient _client = factory.CreateClient();
+        private readonly HttpClient _client;
+
+        public CategoryControllerTests(IntegrationTestFixture fixture)
+        {
+            var factory = new TestApiFactory(fixture);
+            _client = factory.CreateClient();
+        }
 
         [Fact]
         public async Task GetCategoriesAsync_WhenCategoriesExist_ShouldReturnOk()
@@ -48,9 +54,19 @@ namespace MicroWareHouse.Tests.Controllers
         public async Task UpdateCategoryAsync_WhenCategoryIsUpdated_ShouldReturnAccepted()
         {
             // Arrange
+            var createRequest = new CreateCategoryRequest
+            {
+                Name = "Category to be Deleted",
+                LowStockThreshold = 5,
+                OutOfStockThreshold = 0
+            };
+
+            var createdResponse = await _client.PostAsJsonAsync("/api/categories", createRequest);
+            var categoryId = await createdResponse.Content.ReadFromJsonAsync<int>();
+
             var request = new UpdateCategoryRequest
             {
-                Id = 1,
+                Id = categoryId,
                 Name = "Updated Category",
                 LowStockThreshold = new Random().Next(3,3000),
                 OutOfStockThreshold = 2
