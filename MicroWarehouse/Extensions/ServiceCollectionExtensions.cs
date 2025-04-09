@@ -40,6 +40,7 @@ namespace MicroWarehouse.Extensions
             services.AddTransient<IRequestHandler<UpdateProductStockAmountRequest, ApiResponse<bool>>, UpdateProductStockAmountRequestHandler>();
 
             services.AddTransient<IRequestHandler<CreateOrderRequest, ApiResponse<int>>, CreateOrderRequestHandler>();
+            services.AddTransient<IRequestHandler<GetAllOrdersRequest, ApiResponse<IEnumerable<Order>>>, GetAllOrdersRequestHandler>();
 
             //Services
             services.AddSingleton<IIdGeneratorService, IdGeneratorService>();

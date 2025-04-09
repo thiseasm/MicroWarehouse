@@ -17,7 +17,7 @@ namespace MicroWarehouse.Core.Mappings
                 CreatedAt = DateTime.UtcNow
             };
         }
-        public static Order ToDomain(this OrderDto dto)
+        public static Order ToDomain(this OrderDto dto, string productName)
         {
             return new Order
             {
@@ -25,7 +25,8 @@ namespace MicroWarehouse.Core.Mappings
                 ProductId = dto.ProductId,
                 Quantity = dto.Quantity,
                 Status = (OrderStatus)dto.StatusId,
-                CreatedAt = dto.CreatedAt
+                CreatedAt = dto.CreatedAt,
+                ProductName = productName
             };
         }
     }

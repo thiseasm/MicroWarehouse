@@ -12,6 +12,7 @@ namespace MicroWarehouse.Controllers
     {
         [HttpGet]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<Category>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCategoriesAsync(CancellationToken cancellationToken)
         {
             var result = await mediator.Send(new GetAllCategoriesRequest(), cancellationToken);
@@ -20,6 +21,7 @@ namespace MicroWarehouse.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(ApiResponse<Category>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateCategoryAsync([FromBody] CreateCategoryRequest request, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(request, cancellationToken);
@@ -28,14 +30,19 @@ namespace MicroWarehouse.Controllers
 
         [HttpPut]
         [ProducesResponseType(typeof(ApiResponse<Category>), StatusCodes.Status202Accepted)]
-        public async Task<IActionResult> UpdateProductAsync([FromBody] UpdateCategoryRequest request, CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateCategoryAsync([FromBody] UpdateCategoryRequest request, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(request, cancellationToken);
             return HandleResponse(result);
         }
 
         [HttpDelete]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteCategoryAsync([FromBody] DeleteCategoryRequest request, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(request, cancellationToken);
