@@ -84,7 +84,7 @@ namespace MicroWarehouse.Core.Handlers.Orders
                 Quantity = order.Quantity
             }, cancellationToken);
 
-            return ApiResponse<int>.Ok(newOrderId);
+            return ApiResponse<int>.Created(newOrderId);
         }
 
         private async Task<ApiResponse<int>> ReserveStockAndCreateOrderAsync(CreateOrderRequest request, Product product, CancellationToken cancellationToken)

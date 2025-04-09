@@ -180,7 +180,7 @@ namespace MicroWarehouse.Tests.Handlers.Orders
         }
 
         [Fact]
-        public async Task Handle_ShouldPublishOrderReviewRequested_WhenProductIsLowOnStock()
+        public async Task Handle_WhenProductIsLowOnStock_ShouldPublishOrderReviewRequestedAndReturnCreatedResult()
         {
             // Arrange
             var request = new CreateOrderRequest
@@ -215,7 +215,7 @@ namespace MicroWarehouse.Tests.Handlers.Orders
             // Assert
             result.Should().NotBeNull();
             result.Success.Should().BeTrue();
-            result.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            result.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
             await _publishEndpoint.Received(1).Publish<IOrderReviewRequested>(Arg.Any<object>(), Arg.Any<CancellationToken>());
         }
 
