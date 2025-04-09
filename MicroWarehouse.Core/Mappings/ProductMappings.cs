@@ -10,7 +10,7 @@ namespace MicroWarehouse.Core.Mappings
         {
             return new Product
             {
-                Id = dto.CategoryId,
+                Id = dto.ProductId,
                 Name = dto.Name,
                 AvailableStock = dto.StockAmount,
                 Category = categoryDto.ToDomain()

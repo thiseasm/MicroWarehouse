@@ -40,7 +40,7 @@ namespace MicroWarehouse.Controllers
             return HandleResponse(result);
         }
 
-        [HttpPut("stock")]
+        [HttpPatch("stock")]
         [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status500InternalServerError)]
