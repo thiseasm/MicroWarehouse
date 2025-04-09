@@ -30,7 +30,7 @@ namespace MicroWarehouse.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status409Conflict)]
         [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status500InternalServerError)]
@@ -41,7 +41,7 @@ namespace MicroWarehouse.Controllers
         }
 
         [HttpPut("stock")]
-        [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<Product>), StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ApiResponse<ProblemDetails>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateProductStockAmountAsync([FromBody] UpdateProductStockAmountRequest request, CancellationToken cancellationToken)

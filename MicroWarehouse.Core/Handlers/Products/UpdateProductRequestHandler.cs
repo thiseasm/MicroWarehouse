@@ -31,7 +31,7 @@ namespace MicroWarehouse.Core.Handlers.Products
                 }
 
                 var categoryDto = await categoryRepository.GetCategoryByIdAsync(request.CategoryId, cancellationToken);
-                return ApiResponse<Product>.Ok(productDto.ToDomain(categoryDto!));
+                return ApiResponse<Product>.Accepted(productDto.ToDomain(categoryDto!));
             }
             catch (Exception ex)
             {

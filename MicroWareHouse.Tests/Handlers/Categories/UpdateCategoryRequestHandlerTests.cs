@@ -54,7 +54,7 @@ namespace MicroWarehouse.Tests.Handlers.Categories
         }
 
         [Fact]
-        public async Task Handle_WhenCategoryIsUpdatedSuccessfully_ShouldReturnOk()
+        public async Task Handle_WhenCategoryIsUpdatedSuccessfully_ShouldReturnAccepted()
         {
             // Arrange
             var request = new UpdateCategoryRequest
@@ -81,7 +81,7 @@ namespace MicroWarehouse.Tests.Handlers.Categories
             // Assert
             result.Should().NotBeNull();
             result.Success.Should().BeTrue();
-            result.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            result.StatusCode.Should().Be(System.Net.HttpStatusCode.Accepted);
         }
 
         

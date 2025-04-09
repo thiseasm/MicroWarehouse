@@ -24,7 +24,7 @@ namespace MicroWarehouse.Core.Handlers.Categories
                     return ApiResponse<Category>.Conflict(error);
                 }
 
-                return ApiResponse<Category>.Ok(categoryDto.ToDomain());
+                return ApiResponse<Category>.Accepted(categoryDto.ToDomain());
             }
             catch (Exception ex)
             {

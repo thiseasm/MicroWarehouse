@@ -70,7 +70,7 @@ namespace MicroWareHouse.Tests.Handlers.Products
         }
 
         [Fact]
-        public async Task Handle_WhenProductIsUpdated_ShouldReturnOk()
+        public async Task Handle_WhenProductIsUpdated_ShouldReturnAccepted()
         {
             // Arrange
             var request = new UpdateProductRequest
@@ -96,7 +96,7 @@ namespace MicroWareHouse.Tests.Handlers.Products
             // Assert
             result.Should().NotBeNull();
             result.Success.Should().BeTrue();
-            result.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            result.StatusCode.Should().Be(System.Net.HttpStatusCode.Accepted);
         }
 
         [Fact]

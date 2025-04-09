@@ -34,7 +34,7 @@ namespace MicroWarehouse.Core.Handlers.Products
                     ProductId = request.ProductId,
                 }, cancellationToken);
 
-                return ApiResponse<bool>.Ok(result);
+                return ApiResponse<bool>.Accepted(result);
             }
             catch (Exception ex)
             {
