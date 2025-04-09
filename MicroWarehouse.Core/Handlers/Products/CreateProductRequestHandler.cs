@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using MicroWarehouse.Core.Abstractions.Models.Requests.Products;
 using MicroWarehouse.Core.Abstractions.Models.Responses;
-using MicroWarehouse.Infrastructure.Abstractions.DTOs;
+using MicroWarehouse.Core.Mappings;
 using MicroWarehouse.Infrastructure.Abstractions.Interfaces;
 
 namespace MicroWarehouse.Core.Handlers.Products
@@ -22,15 +22,9 @@ namespace MicroWarehouse.Core.Handlers.Products
                 }
 
                 var newProductId = await counterRepository.IncrementCounterAsync("products", cancellationToken);
-                var category = new ProductDto
-                {
-                    ProductId = newProductId,
-                    Name = request.Name,
-                    StockAmount = request.StockAmount,
-                    CategoryId = request.CategoryId
-                };
+                var newProduct = request.ToDto(newProductId);
 
-                await productRepository.CreateAsync(category, cancellationToken);
+                await productRepository.CreateAsync(newProduct, cancellationToken);
                 return ApiResponse<int>.Created(newProductId);
             }
             catch(Exception ex)

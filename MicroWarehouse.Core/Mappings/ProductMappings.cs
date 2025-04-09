@@ -17,10 +17,11 @@ namespace MicroWarehouse.Core.Mappings
             };
         }
 
-        public static ProductDto ToDto(this CreateProductRequest request)
+        public static ProductDto ToDto(this CreateProductRequest request, int newProductId)
         {
             return new ProductDto
             {
+                ProductId = newProductId,
                 Name = request.Name,
                 StockAmount = request.StockAmount,
                 CategoryId = request.CategoryId
